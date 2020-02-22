@@ -23,11 +23,8 @@ const loader = new PIXI.Loader();
 const sprites = [];
 
 function loadSprite(name, source) {
-  loader
-    .add(source)
-    .load(function(){
-      sprites[name] = new PIXI.Sprite(loader.resources[source].texture)
-    })
+  let texture = PIXI.Texture.from(source);
+  sprites[name] = new PIXI.Sprite(texture);
 }
 
 loadSprite("doc", "./images/doc.png");
