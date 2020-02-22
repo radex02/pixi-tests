@@ -22,6 +22,10 @@ const doc = new PIXI.Sprite(texture);
 
 
 //action
+doc.width = 300;
+doc.height = 300;
+doc.x = 50;
+doc.y = 50;
 app.stage.addChild(doc);
 
 function log(input){
