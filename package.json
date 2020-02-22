@@ -1,7 +1,7 @@
 {
-  "name": "typescript",
-  "version": "0.0.0",
-  "private": false,
+  "name": "pixi-tests",
+  "version": "0.0.1",
+  "private": true,
   "dependencies": {
     "pixi.js": "^5.2.1"
   }

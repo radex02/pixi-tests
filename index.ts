@@ -16,8 +16,8 @@ window.addEventListener("resize", function(){
 });
 
 //caching
-const texture = log(PIXI.Texture.from("images/pixelguy.png"));
-const doc = log(new PIXI.Sprite(texture));
+const texture = PIXI.Texture.from("images/pixelguy.png");
+const doc = new PIXI.Sprite(texture);
 
 
 
