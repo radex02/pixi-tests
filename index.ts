@@ -16,8 +16,15 @@ window.addEventListener("resize", function(){
 });
 
 //caching
-const texture = PIXI.Texture.from("images/doc.png");
-const doc = new PIXI.Sprite(texture);
+const texture = log(PIXI.Texture.from("images/doc.png"));
+const doc = log(new PIXI.Sprite(texture));
+
+
 
 //action
 app.stage.addChild(doc);
+
+function log(input){
+  console.log(input);
+  return input
+}
