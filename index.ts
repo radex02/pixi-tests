@@ -20,7 +20,7 @@ window.addEventListener("resize", function(){
 
 //caching
 const loader = new PIXI.Loader();
-const sprites = {};
+const sprites = [];
 
 function loadSprite(name, source) {
   loader
@@ -30,7 +30,8 @@ function loadSprite(name, source) {
     })
 }
 
-loadSprite("doc", "images/doc.svg");
+loadSprite("doc", "./images/doc.png");
 
 //action
-app.stage.addChild(sprites["doc"]);
+const stage = new PIXI.Container();
+stage.addChild(sprites["doc"]);
