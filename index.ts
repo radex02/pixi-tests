@@ -24,11 +24,15 @@ const sprites = [];
 
 function loadSprite(name, source) {
   let texture = PIXI.Texture.from(source);
-  sprites[name] = new PIXI.Sprite(texture);
+  return new PIXI.Sprite(texture);
 }
 
-loadSprite("doc", "./images/doc.png");
+const texture = PIXI.Texture.from("images/doc.png");
+const doc = new PIXI.Sprite(texture);
 
 //action
 const stage = new PIXI.Container();
-stage.addChild(sprites["doc"]);
+
+doc.x = app.renderer.width / 2;
+doc.y = app.renderer.height / 2;
+app.stage.addChild(doc);
