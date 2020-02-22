@@ -19,7 +19,7 @@ window.addEventListener("resize", function(){
 const texture = PIXI.Texture.from("images/pixelguy.png");
 const doc = new PIXI.Sprite(texture);
 
-
+//save
 
 //action
 doc.width = 300;
