@@ -16,26 +16,36 @@ window.addEventListener("resize", function(){
 });
 
 //caching
-app.loader.add('bunny', 'images/doc.png')
-    .load(startup);
+type animation = (delta:number) => void;
 
-function startup()
-{
-    var bunny = new PIXI.Sprite(app.loader.resources.bunny.texture);
-    
-    bunny.anchor.set(0.5);
-    bunny.x = app.renderer.width / 2;
-    bunny.y = app.renderer.height / 2;
-
-    app.stage.addChild(bunny);
-    app.ticker.add(function(delta)
-    {
-        bunny.rotation += 0.1 * delta;
+const environment = {
+  sprites: [],
+  animations: []
+};
+/*
+function initSprite(name:string, source:string) {
+  app.loader.add(name, source)
+    .load(function(){
+      environment.sprites[name] = new PIXI.Sprite(app.loader.resources[name].texture);
+      app.stage.addChild(environment.sprites[name]);
     });
 }
+initSprite("doc", "https://github.com/radex02/pixi-tests/blob/master/images/doc.png?raw=true");
+*/
+
+  app.loader.add("doc", "https://github.com/radex02/pixi-tests/blob/master/images/doc.png?raw=true")
+    .load(function(){
+      environment.sprites["doc"] = new PIXI.Sprite(app.loader.resources["doc"].texture);
+      //app.stage.addChild(environment.sprites.doc);
+    });
 
 //action
+function startup() {
+  app.ticker.add(function(delta) {
+      environment.animations.forEach(function(act:animation){
+        act(delta)
+      })
+  })
+}
 
-
-
-function log(input){ return console.log(input) }
+setInterval(function(){console.log(environment)}, 2500)
