@@ -16,19 +16,26 @@ window.addEventListener("resize", function(){
 });
 
 //caching
-const texture = PIXI.Texture.from("images/pixelguy.png");
-const doc = new PIXI.Sprite(texture);
+app.loader.add('bunny', 'images/doc.png')
+    .load(startup);
 
-//save
+function startup()
+{
+    var bunny = new PIXI.Sprite(app.loader.resources.bunny.texture);
+    
+    bunny.anchor.set(0.5);
+    bunny.x = app.renderer.width / 2;
+    bunny.y = app.renderer.height / 2;
+
+    app.stage.addChild(bunny);
+    app.ticker.add(function(delta)
+    {
+        bunny.rotation += 0.1 * delta;
+    });
+}
 
 //action
-doc.width = 300;
-doc.height = 300;
-doc.x = 50;
-doc.y = 50;
-app.stage.addChild(doc);
 
-function log(input){
-  console.log(input);
-  return input
-}
+
+
+function log(input){ return console.log(input) }
