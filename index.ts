@@ -36,7 +36,7 @@ initSprite("doc", "https://github.com/radex02/pixi-tests/blob/master/images/doc.
   app.loader.add("doc", "https://github.com/radex02/pixi-tests/blob/master/images/doc.png?raw=true")
     .load(function(){
       environment.sprites["doc"] = new PIXI.Sprite(app.loader.resources["doc"].texture);
-      //app.stage.addChild(environment.sprites.doc);
+      app.stage.addChild(environment.sprites["doc"]);
     });
 
 //action
@@ -48,4 +48,4 @@ function startup() {
   })
 }
 
-setInterval(function(){console.log(environment)}, 2500)
+setTimeout(function(){console.log(environment)}, 1000)
