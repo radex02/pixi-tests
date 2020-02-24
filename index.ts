@@ -3,7 +3,8 @@ import * as PIXI from 'pixi.js';
 
 //init
 const app = new PIXI.Application({
-  backgroundColor: 0x70fdff
+  backgroundColor: 0x70fdff,
+  resolution: 1
 });
 document.body.appendChild(app.view);
 
@@ -16,12 +17,11 @@ window.addEventListener("resize", function(){
 });
 
 //caching
-type animation = (delta:number) => void;
-
 const environment = {
   sprites: [],
   animations: []
 };
+
 /*
 function initSprite(name:string, source:string) {
   app.loader.add(name, source)
@@ -30,22 +30,29 @@ function initSprite(name:string, source:string) {
       app.stage.addChild(environment.sprites[name]);
     });
 }
-initSprite("doc", "https://github.com/radex02/pixi-tests/blob/master/images/doc.png?raw=true");
+initSprite("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/images/doc.png");
 */
 
-  app.loader.add("doc", "https://github.com/radex02/pixi-tests/blob/master/images/doc.png?raw=true")
+  app.loader.add("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/images/doc.png")
     .load(function(){
       environment.sprites["doc"] = new PIXI.Sprite(app.loader.resources["doc"].texture);
+      environment.sprites["doc"].x = 300;
+      environment.sprites["doc"].y = 450;
+      environment.sprites["doc"].anchor.set(0.5);
       app.stage.addChild(environment.sprites["doc"]);
+      console.log(environment.sprites)
+      startup()
     });
 
 //action
 function startup() {
   app.ticker.add(function(delta) {
-      environment.animations.forEach(function(act:animation){
+      //environment specifics
+      environment.animations.forEach(function(act){
         act(delta)
       })
+      //generic
+       //environment.sprites["doc"].rotation += 0.1 * delta;
+
   })
 }
-
-setTimeout(function(){console.log(environment)}, 1000)
