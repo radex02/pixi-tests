@@ -30,10 +30,10 @@ function initSprite(name:string, source:string) {
       app.stage.addChild(environment.sprites[name]);
     });
 }
-initSprite("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/images/doc.png");
+initSprite("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/images/doc.gif");
 */
 
-  app.loader.add("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/images/doc.png")
+  app.loader.add("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/images/doc.gif")
     .load(function(){
       environment.sprites["doc"] = new PIXI.Sprite(app.loader.resources["doc"].texture);
       environment.sprites["doc"].x = 300;
