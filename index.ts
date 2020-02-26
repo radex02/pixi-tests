@@ -1,6 +1,4 @@
 import './style.css';
-import "https://raw.githubusercontent.com/Chman/Typogenic/master/Typogenic/Demos/00.%20Fonts/Arial/Arial.fnt";
-import "https://raw.githubusercontent.com/Chman/Typogenic/master/Typogenic/Demos/00.%20Fonts/Arial/Arial.png"
 import * as PIXI from 'pixi.js';
 
 //create container
@@ -16,23 +14,38 @@ let long:number;
 let large:number;
 let name:string;
 let property:string;
+let defaultText:PIXI.TextStyle
+let scale:number;
 
 //style
 app.renderer.view.style.position = "absolute";
 app.renderer.view.style.display = "block";
 
-function initStyle() {
+function getScale():number{ return scale = long*0.05 }
+getScale()
+
+function initStyle():void {
   if (window.innerWidth < window.innerHeight) viewport = "portrait";
   else viewport = "landscape";
   long = Math.max(window.innerWidth, window.innerHeight);
   large= Math.min(window.innerWidth, window.innerHeight);
   app.renderer.resize(window.innerWidth, window.innerHeight);
+
+  //text style
+  defaultText = new PIXI.TextStyle({
+    fill : 0x000000,
+    fontSize: getScale(),
+    fontFamily : 'Arial'
+  })
 }
 initStyle()
 
 //when resize
 window.addEventListener("resize", function(){
   initStyle()
+  getScale()
+
+  //reavaluate dynamic values
   for (name in environment.cores) {
     for (property in environment.cores[name]) {
       if (typeof environment.cores[name][property] === "function") {
@@ -48,8 +61,8 @@ const environment = {
   cores: {}
 };
 
-//SUPER FONCTION DE CRÉATION DE SPRITE
-function initSprite(name:string, source:string, init:{}) {
+//sprite creation
+function initSprite(name:string, source:string, init:{}):void {
   app.loader.add(name, source)
     .load(function(){
       environment.sprites[name] = new PIXI.Sprite(app.loader.resources[name].texture);
@@ -70,6 +83,20 @@ function initSprite(name:string, source:string, init:{}) {
     });
 }
 
+//text managing
+function initText(text, ...args):PIXI.Text {
+  if (text.isSprite) {
+    text.text = args[0]
+    text.position = new PIXI.Point(args[1], args[2])
+    return text
+  } else {
+    let result = new PIXI.Text(text, args[2]);
+    result.position = new PIXI.Point(args[0], args[1])
+    return text = result;
+  }
+}
+let fps = app.stage.addChild(initText(0, 5, window.innerHeight-scale-3, defaultText));
+
 //ACTION
 initSprite("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/images/doc.gif", {
   x() {return window.innerWidth - long*0.075 - 10},
@@ -84,12 +111,12 @@ initSprite("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/i
 //RENDER
 let frames = 0;
 let fpscounter;
-function startup() {
+function startup():void {
   //FPS counter
   fpscounter = setInterval(function(){
-    console.log(frames);
+    initText(fps, frames*2, 5, window.innerHeight-scale-3)
     frames = 0;
-  }, 1000)
+  }, 500)
 
   //ticker
   app.ticker.add(function(delta:number) {
@@ -100,8 +127,3 @@ function startup() {
   })
 }
 startup()
-
-let bitmapText = new PIXI.BitmapText("text using a fancy font!", {font: {
-  name: "Arial",
-  size: 24
-}, align: "right"});
