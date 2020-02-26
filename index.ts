@@ -1,10 +1,12 @@
 import './style.css';
+import "https://raw.githubusercontent.com/Chman/Typogenic/master/Typogenic/Demos/00.%20Fonts/Arial/Arial.fnt";
+import "https://raw.githubusercontent.com/Chman/Typogenic/master/Typogenic/Demos/00.%20Fonts/Arial/Arial.png"
 import * as PIXI from 'pixi.js';
 
 //create container
 const app = new PIXI.Application({
   backgroundColor: 0x70fdff,
-  resolution: 1
+  resolution: window.devicePixelRatio
 });
 document.body.appendChild(app.view);
 
@@ -46,6 +48,7 @@ const environment = {
   cores: {}
 };
 
+//SUPER FONCTION DE CRÉATION DE SPRITE
 function initSprite(name:string, source:string, init:{}) {
   app.loader.add(name, source)
     .load(function(){
@@ -67,22 +70,38 @@ function initSprite(name:string, source:string, init:{}) {
     });
 }
 
-//action
+//ACTION
 initSprite("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/images/doc.gif", {
   x() {return window.innerWidth - long*0.075 - 10},
   y() {return long*0.075 + 10},
   width() {return long*0.15},
   height() {return long*0.15},
-  ticker: function(delta:number){
+  ticker: function(d:number){
     this.me.rotation += 0.06;
   }
 });
 
-startup()
+//RENDER
+let frames = 0;
+let fpscounter;
 function startup() {
-  app.ticker.add(function(delta) {
+  //FPS counter
+  fpscounter = setInterval(function(){
+    console.log(frames);
+    frames = 0;
+  }, 1000)
+
+  //ticker
+  app.ticker.add(function(delta:number) {
+    ++frames;
     for (name in environment.cores) {
       if (typeof environment.cores[name].ticker === "function") environment.cores[name].ticker(delta)
     }
   })
 }
+startup()
+
+let bitmapText = new PIXI.BitmapText("text using a fancy font!", {font: {
+  name: "Arial",
+  size: 24
+}, align: "right"});
