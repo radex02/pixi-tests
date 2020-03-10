@@ -1,5 +1,5 @@
 import './style.css';
-import * as PIXI from 'pixi.js';
+import * as PIXI from 'pixi.js-legacy';
 
 //create container
 const app = new PIXI.Application({
@@ -114,9 +114,9 @@ let fpscounter;
 function startup():void {
   //FPS counter
   fpscounter = setInterval(function(){
-    initText(fps, frames*2, 5, window.innerHeight-scale-3)
+    initText(fps, frames, 5, window.innerHeight-scale-3)
     frames = 0;
-  }, 500)
+  }, 1000)
 
   //ticker
   app.ticker.add(function(delta:number) {
