@@ -20,7 +20,8 @@ let defaultText:PIXI.TextStyle
 let scale:number;
 
 //cursors
-app.renderer.plugins.interaction.cursorStyles.default = "url('https://cdn.custom-cursor.com/db/cursor/pointer_1572.png')"
+app.renderer.plugins.interaction.cursorStyles.default = "url('https://raw.githubusercontent.com/radex02/pixi-tests/master/images/pointer0.png'),auto"
+app.renderer.plugins.interaction.cursorStyles.hover = "url('https://raw.githubusercontent.com/radex02/pixi-tests/master/images/pointer1.png'),auto"
 
 app.renderer.view.style.position = "absolute";
 app.renderer.view.style.display = "block";
@@ -119,6 +120,7 @@ initSprite("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/i
   init: function(sprite:PIXI.Sprite){
     this.me.interactive = true;
     this.me.buttonMode = true;
+    this.me.cursor = 'hover'
     this.me.on('pointerdown', function(){
       console.log('owo')
     });
