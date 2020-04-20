@@ -8,6 +8,8 @@ const app = new PIXI.Application({
 });
 document.body.appendChild(app.view);
 
+
+//STYLE
 //initiating style vars
 let viewport:string;
 let long:number;
@@ -17,11 +19,13 @@ let property:string;
 let defaultText:PIXI.TextStyle
 let scale:number;
 
-//style
+//cursors
+app.renderer.plugins.interaction.cursorStyles.default = "url('https://cdn.custom-cursor.com/db/cursor/pointer_1572.png')"
+
 app.renderer.view.style.position = "absolute";
 app.renderer.view.style.display = "block";
 
-function getScale():number{ return scale = long*0.05 }
+function getScale():number { return scale = long*0.05 }
 getScale()
 
 function initStyle():void {
@@ -61,23 +65,28 @@ const environment = {
   cores: {}
 };
 
+
+//FONCTIONS
 //sprite creation
-function initSprite(name:string, source:string, init:{}):void {
+function initSprite(name:string, source:string, def:{}):void {
   app.loader.add(name, source)
     .load(function(){
       environment.sprites[name] = new PIXI.Sprite(app.loader.resources[name].texture);
-      environment.cores[name] = init;
+      environment.cores[name] = def;
       environment.sprites[name].anchor.set(0.5);
       
       //setting properties
       environment.cores[name].me = environment.sprites[name]; //setting reference
       let property;
-      for (property in init) {
+      for (property in def) {
         if (typeof environment.cores[name][property] === "function") {
           environment.sprites[name][property] = environment.cores[name][property]() 
         } else {
           environment.sprites[name][property] = environment.cores[name][property]
         }
+      }
+      if (environment.sprites[name].init === "function") {
+        environment.sprites[name].init(environment.sprites[name])
       }
       app.stage.addChild(environment.sprites[name]);
     });
@@ -97,6 +106,7 @@ function initText(text, ...args):PIXI.Text {
 }
 let fps = app.stage.addChild(initText(0, 5, window.innerHeight-scale-3, defaultText));
 
+
 //ACTION
 initSprite("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/images/doc.gif", {
   x() {return window.innerWidth - long*0.075 - 10},
@@ -105,8 +115,16 @@ initSprite("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/i
   height() {return long*0.15},
   ticker: function(d:number){
     this.me.rotation += 0.06;
+  },
+  init: function(sprite:PIXI.Sprite){
+    this.me.interactive = true;
+    this.me.buttonMode = true;
+    this.me.on('pointerdown', function(){
+      console.log('owo')
+    });
   }
 });
+
 
 //RENDER
 let frames = 0;
