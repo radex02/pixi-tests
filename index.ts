@@ -4,7 +4,6 @@ import * as PIXI from 'pixi.js-legacy';
 //create container
 const app = new PIXI.Application({
   backgroundColor: 0x70fdff,
-  resolution: window.devicePixelRatio
 });
 document.body.appendChild(app.view);
 
@@ -22,6 +21,9 @@ let scale:number;
 //cursors
 app.renderer.plugins.interaction.cursorStyles.default = "url('https://raw.githubusercontent.com/radex02/pixi-tests/master/images/pointer0.png'),auto"
 app.renderer.plugins.interaction.cursorStyles.hover = "url('https://raw.githubusercontent.com/radex02/pixi-tests/master/images/pointer1.png'),auto"
+
+//custom right-click
+document.addEventListener('contextmenu', e => e.preventDefault());
 
 app.renderer.view.style.position = "absolute";
 app.renderer.view.style.display = "block";
@@ -107,7 +109,6 @@ function initText(text, ...args):PIXI.Text {
 }
 let fps = app.stage.addChild(initText(0, 5, window.innerHeight-scale-3, defaultText));
 
-
 //ACTION
 initSprite("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/images/doc.gif", {
   x() {return window.innerWidth - long*0.075 - 10},
@@ -116,13 +117,14 @@ initSprite("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/i
   height() {return long*0.15},
   ticker: function(d:number){
     this.me.rotation += 0.06;
+    this.me.axisY += 0.1;
   },
   init: function(sprite:PIXI.Sprite){
     this.me.interactive = true;
     this.me.buttonMode = true;
     this.me.cursor = 'hover'
     this.me.on('pointerdown', function(){
-      console.log('owo')
+      console.log("owo")
     });
   }
 });
