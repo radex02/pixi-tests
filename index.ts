@@ -149,3 +149,13 @@ function startup():void {
   })
 }
 startup()
+
+//on first click
+document.addEventListener("click", firstClick)
+function firstClick(){
+
+  //start ambiance music
+  let ambianceSound = new Audio("https://raw.githubusercontent.com/radex02/pixi-tests/master/audios/ambiance.mp4");
+  ambianceSound.loop = true;
+  ambianceSound.play();
+}
