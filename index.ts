@@ -151,8 +151,9 @@ function startup():void {
 startup()
 
 //on first click
-document.addEventListener("click", firstClick)
+document.addEventListener("click", firstClick);
 function firstClick(){
+  document.removeEventListener("click", firstClick)
 
   //start ambiance music
   let ambianceSound = new Audio("https://raw.githubusercontent.com/radex02/pixi-tests/master/audios/ambiance.mp4");
