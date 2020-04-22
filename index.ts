@@ -124,7 +124,7 @@ initSprite("doc", "https://raw.githubusercontent.com/radex02/pixi-tests/master/i
     this.me.buttonMode = true;
     this.me.cursor = 'hover'
     this.me.on('pointerdown', function(){
-      console.log("owo")
+      alert("OwO!?")
     });
   }
 });
@@ -152,8 +152,11 @@ startup()
 
 //on first click
 document.addEventListener("click", firstClick);
+document.addEventListener("touchstart", firstClick)
 function firstClick(){
+  //remove event listen
   document.removeEventListener("click", firstClick)
+  document.removeEventListener("touchstart", firstClick)
 
   //start ambiance music
   let ambianceSound = new Audio("https://raw.githubusercontent.com/radex02/pixi-tests/master/audios/ambiance.mp4");
