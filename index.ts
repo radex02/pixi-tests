@@ -152,11 +152,11 @@ startup()
 
 //on first click
 document.addEventListener("click", firstClick);
-document.addEventListener("touchstart", firstClick)
+document.addEventListener("touchstart", firstClick);
 function firstClick(){
-  //remove event listen
-  document.removeEventListener("click", firstClick)
-  document.removeEventListener("touchstart", firstClick)
+  //remove event listeners
+  document.removeEventListener("click", firstClick);
+  document.removeEventListener("touchstart", firstClick);
 
   //start ambiance music
   let ambianceSound = new Audio("https://raw.githubusercontent.com/radex02/pixi-tests/master/audios/ambiance.mp4");
