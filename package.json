@@ -3,6 +3,6 @@
   "version": "0.0.1",
   "private": false,
   "dependencies": {
-    "pixi.js-legacy": "^5.2.1"
+    "pixi.js-legacy": "^6.0.0"
   }
 }
